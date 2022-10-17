@@ -1,0 +1,53 @@
+---
+title: "QMM Agn- 6"
+author: "SAMIKSHA VENUGOPAL"
+date: "10/16/2022"
+output: html_document
+---
+
+```{r}
+## Loading te required library and reading the file.
+library(lpSolveAPI)
+Transportation.lp <- read.lp("Transportation.lp")
+```
+
+```{r}
+## Solution to the transportation problem 
+Transportation.lp
+solve(Transportation.lp)
+```
+
+
+```{r}
+
+## Print the Optimum solution for the model 
+get.objective(Transportation.lp)
+
+## The  Optimum solution for this transportation problem is 132790
+## which is te minimum combined cost for both production and shipping ) the items from plants to 
+## warehouse
+```
+
+```{r}
+## Print the optimum values for no of units produced and shipped from the plant to warehouse
+
+desc_vr <- get.variables(Transportation.lp)
+print(paste("The Optimum values for the decision Vars:",as.data.frame(desc_vr)))
+
+```
+```{r}
+## Print the Optimal vues for constraints to have feasible solution
+Const <- get.constraints(Transportation.lp)
+print(paste("The Optimum values for the constraints:",as.data.frame(Const)))
+
+```
+
+```{r}
+## Observation from the Output
+
+## * 100 units are produced in plant A. It ships 60 units from Plant A to warehouse 2 and 40 units ## to warehouse 3.
+##110 Units are produced in Plant b. It ships 80 units from Plant B to wareouse 1 and 30 units to ## warehouse 3.
+
+## For the  given problem to feasible solution is supply= demand
+```
+
