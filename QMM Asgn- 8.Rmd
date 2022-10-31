@@ -1,0 +1,201 @@
+---
+title: "QMM .Asgn- 8"
+author: "SAMIKSHA VENUGOPAL"
+date: "10/30/2022"
+output: html_document
+---
+
+```{r}
+# Loading the required packages 
+
+install.packages("Benchmarking")
+library(Benchmarking)
+install.packages("cowplot")
+library(cowplot)
+
+```
+```{r}
+## Formulating the problem 
+
+## Using benchmarking library to solve DEA
+
+## Reading the data 
+## * input : staff hours and supplies per days.
+
+## * Output: Reimbursed Patient-Days and Privately paid patient days.
+
+input <-  matrix(c(150,400,320,520,350,320,0.2,0.7,1.2,2.0,1.2,0.7),ncol = 2)
+Output <- matrix(c(14000,14000,42000,28000,19000,14000,3500,21000,10500,42000,25000,15000),ncol = 2)
+colnames(input)<-c('staff Hours(Per Day)','Supplies(Per Day)')
+colnames(Output)<-c('Reimbursed Patient','Privately Paid Patient')
+rownames(input)<-c('Facility1','Facility2','Facility3','Facility4','Facility5','Facility6')
+rownames(Output)<-c('Facility1','Facility2','Facility3','Facility4','Facility5','Facility6')
+input
+Output
+
+                 
+```
+```{r}
+# DEA analysis using FDH
+
+# Analysing the input and output 
+Analysis_fdh <- dea(input,Output,RTS = "fdh")
+
+#Efficiency of the DEA with FDH assumption
+
+Efficiency_fdh <- as.data.frame(Analysis_fdh$eff)
+colnames(Efficiency_fdh) <- c("Efficiency_FDH")
+
+# Finding  the peers 
+peers_fdh <- as.data.frame(Analysis_fdh$peers)
+colnames(peers_fdh) <- c("Peers_FDH")
+
+# Using Lambda Function
+lambda_fdh <- as.data.frame(Analysis_fdh$lambda)
+colnames(lambda_fdh) <-c("FHD_Lambda1","FHD_Lambda2","FHD_Lambda3","FHD_Lambda4","FHD_Lambda5","FHD_Lambda6")
+
+# Analysing peers , lambda and efficiency
+dea_fdh <- cbind(Efficiency_fdh,peers_fdh,lambda_fdh)
+rownames(dea_fdh) <- c('F1','F2','F3','F4','F5','F6')
+
+# Summarise 
+dea_fdh
+
+```
+
+```{r}
+# DEA analysis using CRS 
+
+# Analysing the input and output 
+Analysis_CRS <- dea(input,Output,RTS = "crs")
+
+#Efficiency of the DEA with CRS assumption
+Efficiency_CRS <- as.data.frame(Analysis_CRS$eff)
+colnames(Efficiency_CRS) <- c("Efficiency_CRS")
+
+# Finding  the peers 
+peers_CRS <- peers(Analysis_CRS)
+colnames(peers_CRS) <- c("Peer1_CRS","Peer2_CRS","Peer3_CRS")
+
+# Using Lambda Function
+lambda_CRS <- lambda(Analysis_CRS)
+colnames(lambda_CRS) <- c("CRS_Lambda1","CRS_Lambda2","CRS_Lambda3","CRS_Lambda4")
+
+# Analysing peers , lambda and efficiency
+dea_CRS <- cbind(Efficiency_CRS,peers_CRS,lambda_CRS)
+rownames(dea_CRS) <- c('F1','F2','F3','F4','F5','F6')
+
+# Summarise 
+dea_CRS
+```
+```{r}
+# Using VSR 
+
+
+# Analysing the input and output 
+Analysis_VRS <- dea(input,Output,RTS = "vrs")
+
+#Efficiency of the DEA with CRS assumption
+Efficiency_VRS <- as.data.frame(Analysis_VRS$eff)
+colnames(Efficiency_VRS) <- c("Efficiency_VRS")
+
+# Finding  the peers 
+peers_VRS <- peers(Analysis_VRS)
+colnames(peers_VRS) <- c("Peer1_VRS","Peer2_VRS","Peer3_VRS")
+
+# Using Lambda Function
+lambda_VRS <- lambda(Analysis_VRS)
+colnames(lambda_VRS) <- c("VRS_Lambda1","VRS_Lambda2","VRS_Lambda3","VRS_Lambda4","VRS_Lambda5")
+
+# Analysing peers , lambda and efficiency
+dea_VRS <- cbind(Efficiency_VRS,peers_VRS,lambda_VRS)
+rownames(dea_VRS) <- c('F1','F2','F3','F4','F5','F6')
+
+# Summarise 
+dea_VRS
+```
+
+```{r}
+
+## DEA analysis with IRS
+
+# Analysing the input and output 
+Analysis_IRS <- dea(input,Output,RTS = "irs")
+
+#Efficiency of the DEA with CRS assumption
+Efficiency_IRS <- as.data.frame(Analysis_IRS$eff)
+colnames(Efficiency_IRS) <- c("Efficiency_IRS")
+
+# Finding  the peers 
+peers_IRS <- peers(Analysis_IRS)
+colnames(peers_IRS) <- c("Peer1_IRS","Peer2_IRS","Peer3_IRS")
+
+# Using Lambda Function
+lambda_IRS <- lambda(Analysis_IRS)
+colnames(lambda_IRS) <- c("IRS_Lambda1","IRS_Lambda2","IRS_Lambda3","IRS_Lambda4","IRS_Lambda5")
+
+# Analysing peers , lambda and efficiency
+dea_IRS <- cbind(Efficiency_IRS,peers_IRS,lambda_IRS)
+rownames(dea_IRS) <- c('F1','F2','F3','F4','F5','F6')
+
+# Summarise 
+dea_IRS
+
+```
+```{r}
+## DEA analysis using DRS
+
+# Analysing the input and output 
+Analysis_DRS <- dea(input,Output,RTS = "drs")
+
+#Efficiency of the DEA with DRS assumption
+Efficiency_DRS <- as.data.frame(Analysis_DRS$eff)
+colnames(Efficiency_DRS) <- c("Efficiency_DRS")
+
+# Finding  the peers 
+peers_DRS <- peers(Analysis_DRS)
+colnames(peers_DRS) <- c("Peer1_DRS","Peer2_DRS","Peer3_DRS")
+
+# Using Lambda Function
+lambda_DRS <- lambda(Analysis_DRS)
+colnames(lambda_DRS) <- c("_Lambda1","DRS_Lambda2","DRS_Lambda3","DRS_Lambda4")
+
+# Analysing peers , lambda and efficiency
+dea_DRS <- cbind(Efficiency_DRS,peers_DRS,lambda_DRS)
+rownames(dea_CRS) <- c('F1','F2','F3','F4','F5','F6')
+
+# Summarise 
+dea_DRS
+```
+
+```{r}
+ 
+## DEA analysis using FRH
+
+# Analysing the input and output 
+Analysis_FRH <- dea(input,Output,RTS = "add")
+
+#Efficiency of the DEA with DRS assumption
+Efficiency_FRH <- as.data.frame(Analysis_FRH$eff)
+colnames(Efficiency_FRH) <- c("Efficiency_FRH")
+
+# Finding  the peers 
+peers_FRH <- peers(Analysis_FRH)
+colnames(peers_FRH) <- c("Peer1_FRH")
+                         
+
+# Using Lambda Function
+lambda_FRH <- lambda(Analysis_FRH)
+colnames(lambda_FRH) <- c("FRH_Lambda1","FRH_Lambda2","FRH_Lambda3","FRH_Lambda4","FRH_Lambda5","FRH_Lambda6")
+
+# Analysing peers , lambda and efficiency
+dea_FRH <- cbind(Efficiency_FRH,peers_FRH,lambda_FRH)
+rownames(dea_FRH) <- c('F1','F2','F3','F4','F5','F6')
+
+# Summarise 
+dea_FRH
+
+```
+
+
+
