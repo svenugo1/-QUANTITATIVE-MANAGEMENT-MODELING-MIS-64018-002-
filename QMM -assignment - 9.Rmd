@@ -1,0 +1,65 @@
+---
+title: "QMM. Asign- 8"
+author: "SAMIKSHA VENUGOPAL"
+date: "11/6/2022"
+output: html_document
+---
+
+```{r}
+library(lpSolveAPI)
+library('lpSolve')
+library(readr)
+library(lpSolve)
+```
+goal <- read.lp("/Users/samikshachalla/Desktop/G.lp.txt")
+
+```{r}
+
+
+library(readr)
+dataset <- read_csv(NULL)
+View(Goal.lp)
+goal<-read.lp("Goal.lp")
+
+goal <- read.lp("/Users/samikshachalla/Desktop/Gps.lp",type = c("lp"),verbose = "neutral")
+solve(goal) 
+
+# Print the model
+
+goal
+```
+
+
+```{r}
+# To identify the Optimal Solution
+get.objective(goal)
+```
+
+```{r}
+# To identify the variables
+get.variables(goal)
+```
+
+```{r}
+library(lpSolveAPI)
+
+preemptive_goal<- read.lp("preemptive_goal.lp")
+
+solve(preemptive_goal)
+
+# Print the model 
+
+preemptive_goal
+```
+
+```{r}
+# To identify the optimal solution
+get.objective(preemptive_goal)
+
+```
+
+```{r}
+# To identify the optimal solution
+get.variables(preemptive_goal)
+```
+
