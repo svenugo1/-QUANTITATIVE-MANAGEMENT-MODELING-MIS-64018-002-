@@ -1,0 +1,116 @@
+---
+title: "QMM - Module 11"
+author: "SAMIKSHA VENUGOPAL"
+date: "11/20/2022"
+output:
+  pdf_document: default
+  word_document: default
+  html_document: default
+---
+
+```{r}
+library(lpSolveAPI)
+library(lpSolve)
+```
+
+```{r}
+
+f.obj <- c(775,800,800,800,800,775,750)
+f.con <- matrix(c(0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1),nrow = 14,byrow = TRUE)
+f.dir <- c(">=",">=",">=",">=",">=",">=",">=",">=",">=",">=",">=",">=",">=",">=")
+f.rhs <- c(18,27,22,26,25,21,19,1,1,1,1,1,1,1)
+model <- lp('min',f.obj,f.con,f.dir,f.rhs,int.vec = 1:15)
+model
+model$solution
+```
+
+## Conclusion
+
+We can conclude that minimum cost is 25675
+
+
+
+```{r}
+### ALternative method
+
+```
+           ### ALternative method 
+           
+   ### Objective Function
+
+775x1 + 800x2 + 800x3 + 800x4 + 800x5 + 775x6 + 750x7 = MINIMIZE        
+
+ Shift 1
+ Shift 2 
+ Shift 3 
+ Shift 4 
+ Shift 5 
+ Shift 6 
+ Shift 7 
+ 
+ # Constraints
+ 
+ (refer)
+ 
+           
+```{r}
+
+predict <- make.lp(0, 7)
+
+set.objfn(predict, c(775, 800, 800, 800, 800, 775, 750))
+
+lp.control(predict)
+
+add.constraint(predict, c(0,1,1,1,1,1,0), ">=", 18)
+add.constraint(predict, c(0,0,1,1,1,1,1), ">=", 27)
+add.constraint(predict, c(1,0,0,1,1,1,1), ">=", 22)
+add.constraint(predict, c(1,1,0,0,1,1,1), ">=", 26)
+add.constraint(predict, c(1,1,1,0,0,1,1), ">=", 25)
+add.constraint(predict, c(1,1,1,1,0,0,1), ">=", 21)
+add.constraint(predict, c(1,1,1,1,1,0,0), ">=", 19)
+
+
+
+solve(predict)
+get.objective(predict)
+get.variables(predict)
+
+```
+```{r}
+
+    ### ALternative method 
+
+Working_days = matrix(c("Sunday","Monday","Tuesday","Wednesday","Thursay","Friday","Saturday",18,27,22,26,25,21,19),ncol = 2,byrow = F)
+colnames(Working_days) =c("Daysoftheweek","Workers")
+as.table(Working_days)
+
+```
+
+# interpreration 
+x1= 2 working shift 1
+x2 = 4  working shift 2
+x3 = 5 working shift 3
+x4 = 0 working shift 4 
+x5 = 8 working shift 5
+x6 = 1 working shift 6
+x7 = 13 working shift 7
+
+
+```{r}
+consider =  matrix(c(0,4,5,0,8,1,0,0,0,5,0,8,1,13,2,0,0,0,8,1,13,2,4,0,0,8,1,13,2,4,5,0,0,1,13,2,3,4,0,0,0,13,2,4,5,0,8,0,0),ncol=7,byrow=TRUE)
+colnames(consider) =c("Shift_1", "Shift_2", "Shift_3", "Shift_4", "Shift_5", "Shift_6", "Shift_7")
+row.names(consider) = c('Sunday', 'Monday', 'Tuesday','Wednesday','Thursday','Friday','Saturday')
+consider
+
+## no of employees available on daily basic 
+rowSums(consider)
+```
+
+
+## Conclusion
+
+Firstly we see that the workers are avaliable on the monday, tuesday , wednessday, thursday,  friday , saturday and sunday. we have 7 shifts 
+therefore Shift arrangement that reduce the wage cost.
+
+
+
